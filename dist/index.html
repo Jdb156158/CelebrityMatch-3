@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f4ed"><meta name="description" content="将六边形色块放进蜂窝棋盘，聚合同色，点亮十二幅名人肖像。一个治愈的艺术消除小游戏。">
+<title>名人画室 · Portrait Atelier</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar"><a class="brand" href="./" aria-label="名人画室首页"><span class="brand-mark">✳</span><span>名人画室<small>PORTRAIT ATELIER</small></span></a><nav><button class="nav active" id="studioTab">画室</button><button class="nav" id="galleryTab">作品集 <span id="collectionCount">0 / 12</span></button></nav><div class="header-actions"><button class="icon-btn" id="soundBtn" title="开启声音" aria-label="开启声音">♫</button><button class="icon-btn" id="helpBtn" title="玩法说明" aria-label="玩法说明">?</button></div></header>
+<main>
+<div class="intro"><div><span class="eyebrow"><i></i> A LITTLE COLOR, A LITTLE JOY</span><h1>让色彩，唤醒经典。</h1><p>放下一块色彩，遇见一位老朋友。</p></div><div class="session"><span class="sun">☼</span><div>不赶时间，慢慢画<small>YOUR DAILY MOMENT OF CALM</small></div></div></div>
+<div class="workspace">
+<aside class="collection-panel"><div class="section-heading"><h2>今日的灵感</h2><span>01 — 12</span></div><div class="art-list" id="artList"></div><button class="text-link" id="allArtBtn">探索全部 12 幅作品 <span>↗</span></button><div class="quote"><span>“</span><p>伟大的事物，<br>都是由微小的事物<br>汇聚而成的。</p><small>— 文森特 · 梵高</small><div class="quote-line"></div></div><div class="save-status"><span>◌</span> 你的作品会自动保存在这里</div></aside>
+<section class="studio" aria-label="消除画室"><div class="studio-top"><span id="levelLabel">作品 01</span><span class="difficulty"><i></i> 轻松创作</span><button id="restartBtn" aria-label="重新开始" title="重新开始">↻</button></div>
+<div class="painting-area"><div class="wall-shadow"></div><div class="frame"><i class="corner tl">✦</i><i class="corner tr">✦</i><i class="corner bl">✦</i><i class="corner br">✦</i><div class="portrait" id="portrait"><div class="art-image sketch" id="sketch"></div><div class="art-image painted" id="painted"></div><div class="canvas-texture"></div></div></div><div class="painting-label"><span id="artistName">戴珍珠耳环的少女</span><small id="artistCaption">JOHANNES VERMEER · 1665</small></div><div class="progress-tag"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/><circle id="progressRing" cx="22" cy="22" r="19"/></svg><b id="progressNumber">0<span>%</span></b></div></div>
+<div class="table"><div class="table-caption"><span id="boardMessage">选一叠色块，放进空格</span><span class="score"><span>✦</span> <b id="score">0</b></span></div><canvas id="board" width="1040" height="670" aria-label="19格蜂窝棋盘，可使用方向键选择空格并回车放置" tabindex="0"></canvas><div class="tray-wrap"><span class="tray-title">你的调色盘</span><canvas id="tray" width="1040" height="200" aria-label="三个待放置色块，按1、2、3选择" tabindex="0"></canvas><span class="tray-hint" id="trayHint">点击选择 · 再点空格放置，也可拖动</span></div></div>
+<div class="studio-tools"><button id="undoBtn"><span>↶</span> 撤销 <small id="undoCount">3</small></button><span class="tool-divider"></span><button id="shuffleBtn"><span>⤨</span> 换色 <small id="shuffleCount">3</small></button><span class="tool-divider"></span><button id="brushBtn"><span>⌁</span> 画笔 <small id="brushCount">2</small></button></div>
+</section>
+<aside class="guide-panel"><div class="goal-card"><span class="mini-label">MAKE A MASTERPIECE</span><h2>一点一点，<br>让名画有了颜色。</h2><p>收集这 6 种颜料<br>完成你的专属作品</p><div id="colorGoals" class="color-goals"></div><div class="goal-total"><span>已收集颜料</span><b id="goalTotal">0 <em>/ 72</em></b></div></div><div class="howto"><h3>小小画室使用指南 <span>↙</span></h3><div><b>1</b><p><strong>放一放</strong><small>把色块放到任意空格</small></p></div><div><b>2</b><p><strong>合一合</strong><small>相邻同色自动聚拢</small></p></div><div><b>3</b><p><strong>涂一涂</strong><small>叠满 6 片，消除并上色</small></p></div></div><div class="gentle-note"><span>✧</span> 没有倒计时<br><small>每一小步，都算数。</small></div></aside>
+</div>
+<footer><span>MADE OF LITTLE COLORFUL MOMENTS</span><span>戴上耳机，享受一点创作时间 <i>♫</i></span></footer>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div><div class="effects" id="effects"></div>
+<dialog id="galleryDialog"><div class="dialog-head"><div><span class="eyebrow">THE PORTRAIT COLLECTION</span><h2>与十二位经典，相遇。</h2><p>选择一幅肖像，开始你的色彩创作。</p></div><button class="close-btn" data-close aria-label="关闭">×</button></div><div class="gallery-grid" id="galleryGrid"></div></dialog>
+<dialog id="helpDialog"><div class="dialog-head"><div><span class="eyebrow">A LITTLE GUIDE</span><h2>三步，画出一幅经典。</h2></div><button class="close-btn" data-close aria-label="关闭">×</button></div><div class="help-steps"><p><b>01 · 放置</b>点击底部一叠颜料，再点击棋盘空格；也可以直接拖进去。</p><p><b>02 · 聚色</b>六个方向相邻的同色块会自动合并，满 6 片就会一起消除。</p><p><b>03 · 上色</b>消除的颜料飞向画布。每色收集 12 片，完成一幅作品。</p></div><p class="help-note">撤销可以退回上一步；换色会刷新调色盘；画笔可以清除一格。每幅作品都会重置道具次数。键盘：1–3 选色块，方向键选格，Enter 放置，Esc 取消。</p><button class="primary-btn" data-close>开始我的创作 <span>↗</span></button></dialog>
+<dialog id="resultDialog"><div id="resultContent"></div></dialog>
+<script type="module" src="app.js"></script>
+</body></html>
