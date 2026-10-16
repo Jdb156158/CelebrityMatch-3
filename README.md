@@ -2,7 +2,7 @@
 
 [在线游玩 →](https://jdb156158.github.io/CelebrityMatch-3/)
 
-[![名人画室游戏预览](docs/screenshots/collection-100.png)](https://jdb156158.github.io/CelebrityMatch-3/)
+[![名人画室游戏预览](docs/screenshots/gameplay-preview.png)](https://jdb156158.github.io/CelebrityMatch-3/)
 
 根据参考视频制作的蜂窝叠色消除小游戏：放置色块 → 同色聚合 → 叠满消除 → 肖像上色。
 
