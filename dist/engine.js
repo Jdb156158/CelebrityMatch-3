@@ -6,11 +6,7 @@ export const COLORS = [
   { name:'鸢尾紫',hex:'#aaa3cf',dark:'#7c75a9' },
   { name:'奶油白',hex:'#e9dfbe',dark:'#b7aa86' }
 ];
-export const ART = [
- ['戴珍珠耳环的少女','JOHANNES VERMEER · 1665','维米尔'],['蒙娜丽莎','LEONARDO DA VINCI · 1503','达 · 芬奇'],['戴草帽的梵高','VINCENT VAN GOGH · 1887','文森特 · 梵高'],['爱因斯坦','ALBERT EINSTEIN · 1879–1955','阿尔伯特 · 爱因斯坦'],
- ['弗里达','FRIDA KAHLO · 1907–1954','弗里达 · 卡罗'],['玛丽莲 · 梦露','MARILYN MONROE · 1926–1962','玛丽莲 · 梦露'],['卓别林','CHARLIE CHAPLIN · 1889–1977','查理 · 卓别林'],['奥黛丽 · 赫本','AUDREY HEPBURN · 1929–1993','奥黛丽 · 赫本'],
- ['贝多芬','LUDWIG VAN BEETHOVEN · 1770–1827','路德维希 · 贝多芬'],['萨尔瓦多 · 达利','SALVADOR DALÍ · 1904–1989','萨尔瓦多 · 达利'],['达 · 芬奇','LEONARDO DA VINCI · 1452–1519','列奥纳多 · 达 · 芬奇'],['牛顿','ISAAC NEWTON · 1643–1727','艾萨克 · 牛顿']
-];
+export {ART} from './portraits.js';
 export const CELLS=[];
 for(let r=-2;r<=2;r++) for(let q=-2;q<=2;q++) if(Math.abs(q+r)<=2) CELLS.push({q,r});
 export function adjacent(a,b){return Math.max(Math.abs(a.q-b.q),Math.abs(a.r-b.r),Math.abs(a.q+a.r-b.q-b.r))===1;}

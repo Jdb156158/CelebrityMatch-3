@@ -1,3 +1,4 @@
+import {artAsset} from './portraits.js';
 // A continuous texture deformation: the portrait stretches into glossy liquid
 // fingers while its upper edge drains away. No pre-rendered movie is used.
 const vertexSource = `
@@ -14,6 +15,7 @@ uniform sampler2D portrait;
 uniform vec2 resolution;
 uniform vec4 source;
 uniform vec2 atlasCell;
+uniform vec2 atlasGrid;
 uniform float time;
 uniform float reach;
 uniform vec4 head;
@@ -52,7 +54,7 @@ void main() {
   alpha *= mix(1., subject, ease(.05, .38, time));
   alpha *= 1. - ease(.86, 1., time);
   if (depth < .03 || alpha < .001) discard;
-  vec2 samplePoint = (atlasCell + vec2(clamp(u, .003, .997), clamp(v, .003, .997))) / vec2(4., 3.);
+  vec2 samplePoint = (atlasCell + vec2(clamp(u, .003, .997), clamp(v, .003, .997))) / atlasGrid;
   vec3 color = texture2D(portrait, samplePoint).rgb;
   // Cylindrical glints and a darker rim make the pulled paint read as liquid.
   float shine = pow(max(0., cos(phase + .55)), 20.);
@@ -64,20 +66,21 @@ void main() {
   gl_FragColor = vec4(color, alpha);
 }`;
 
-let imagePromise;
-function loadPortraits() {
-  imagePromise ??= new Promise((resolve, reject) => {
+const imagePromises = new Map();
+function loadPortraits(src) {
+  if (!imagePromises.has(src)) imagePromises.set(src, new Promise((resolve, reject) => {
     const image = new Image();
     image.onload = () => resolve(image);
     image.onerror = reject;
-    image.src = new URL('./assets/portraits.png', import.meta.url).href;
-  });
-  return imagePromise;
+    image.src = new URL(src, import.meta.url).href;
+  }));
+  return imagePromises.get(src);
 }
 
 export async function meltPortrait({ studio, portrait, board, art, onProgress }) {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const image = await loadPortraits();
+  const asset = artAsset(art);
+  const image = await loadPortraits(asset.src);
   const canvas = document.createElement('canvas');
   canvas.className = 'melt-overlay';
   canvas.setAttribute('aria-hidden', 'true');
@@ -111,11 +114,12 @@ export async function meltPortrait({ studio, portrait, board, art, onProgress })
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  const uniforms = Object.fromEntries(['resolution', 'source', 'atlasCell', 'time', 'reach', 'head', 'body'].map(name => [name, gl.getUniformLocation(program, name)]));
-  gl.uniform2f(uniforms.atlasCell, art % 4, Math.floor(art / 4));
+  const uniforms = Object.fromEntries(['resolution', 'source', 'atlasCell', 'atlasGrid', 'time', 'reach', 'head', 'body'].map(name => [name, gl.getUniformLocation(program, name)]));
+  gl.uniform2f(uniforms.atlasCell, asset.x, asset.y);
+  gl.uniform2f(uniforms.atlasGrid, asset.columns, asset.rows);
   // Broad silhouette envelopes keep the background from becoming falling ribbons.
   const headRadii = [[.34,.46],[.31,.44],[.47,.43],[.49,.43],[.44,.46],[.43,.42],[.4,.44],[.35,.46],[.46,.47],[.37,.46],[.42,.51],[.46,.51]];
-  gl.uniform4f(uniforms.head, .5, .36, ...headRadii[art]);
+  gl.uniform4f(uniforms.head, .5, .36, ...(headRadii[art] || [.43,.48]));
   gl.uniform4f(uniforms.body, .54, .98, .55, .49);
   studio.append(canvas);
   studio.classList.add('melting');
