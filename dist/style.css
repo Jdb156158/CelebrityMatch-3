@@ -14,4 +14,4 @@
 
 .studio[aria-busy="true"] .painting-label{opacity:0}.painting-label{transition:opacity .2s}
 
-.studio-top .switch-art{display:inline-flex;align-items:center;gap:4px;min-height:20px;padding:3px 8px;border:1px solid #c8cfb9;border-radius:20px;background:#f2f2e6;color:#6e805f;font-size:9px;line-height:1;letter-spacing:.5px;white-space:nowrap}.switch-art:hover:not(:disabled){background:#e2e8d7;border-color:#aebc9c}
+.studio-top .studio-action{display:inline-flex;align-items:center;justify-content:center;flex:0 0 30px;width:30px;height:30px;margin-left:8px;padding:6px;border:1px solid #c8cfb9;border-radius:50%;background:#f2f2e6;color:#6e805f;line-height:1}.studio-action svg{display:block;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.studio-action:hover:not(:disabled){background:#e2e8d7;border-color:#aebc9c}
